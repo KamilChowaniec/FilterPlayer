@@ -1,6 +1,8 @@
 import React from 'react';
-const Navbar = () => <nav className="navbar">
-    
-     </nav> 
+import "./Navbar.css"
+
+const Navbar = () => <nav className="navContainer">
+    <div className="navLogoText">W2G</div>
+</nav> 
 
 export default Navbar;
