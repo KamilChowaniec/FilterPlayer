@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import socket from "socket";
+import Scrollable from "components/Scrollable/Scrollable";
 import "./Chat.css";
 
 const Chat = () => {
@@ -7,6 +8,7 @@ const Chat = () => {
   const [users, setUsers] = useState([]);
   const [msg, setMsg] = useState("");
   const [history, setHistory] = useState([]);
+  const [autoScroll, setAutoScroll] = useState(true);
 
   useEffect(() => {
     socket.on("users", (userList) => {
@@ -38,7 +40,7 @@ const Chat = () => {
   };
 
   const scrollToBottom = () => {
-    endMsgRef.current.scrollIntoView({ behavior: "smooth" });
+    endMsgRef.current.scrollIntoView();
   };
 
   const onInputChange = (e) => {
@@ -63,12 +65,20 @@ const Chat = () => {
       <div className="chatHeader">Chat</div>
       <div className="chatSep"></div>
       <div className="chatFlexBox">
-        <div className="chatMsgBox">
+        <Scrollable
+          className="chatMsgBox"
+          scrollColor="rgb(27,27,27)"
+          scrollBorder="rgb(55,55,55)"
+          scrollWidth="10px"
+          scrollRadius="25px"
+          transitionDuration="0.5s"
+          transitionDelay="1.5s"
+        >
           <ul className="chatMsgList">
             {renderMessages()}
             <div ref={endMsgRef} />
           </ul>
-        </div>
+        </Scrollable>
       </div>
       <div className="chatInputBox">
         <form onSubmit={sendMsg}>
