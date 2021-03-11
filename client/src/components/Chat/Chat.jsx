@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import socket from "socket";
 import Scrollable from "components/Scrollable/Scrollable";
 import "./Chat.css";
@@ -11,23 +11,14 @@ const Chat = () => {
   const [autoScroll, setAutoScroll] = useState(true);
 
   useEffect(() => {
-    socket.on("users", (userList) => {
-      setUsers(userList);
-      console.log("Setting users");
-    });
-    socket.on("chatHistory", (hist) => {
-      setHistory(hist);
-      console.log("Setting history");
-    });
+    socket.on("users", (userList) => setUsers(userList));
+    socket.on("chatHistory", (hist) => setHistory(hist));
   }, []);
 
   useEffect(() => {
     if (endMsgRef.current) {
       socket.on("chatMsg", (msg) => {
-        setHistory((history) => {
-          console.log(history);
-          return [...history, msg];
-        });
+        setHistory((history) => [...history, msg]);
         scrollToBottom();
       });
     }
@@ -48,11 +39,11 @@ const Chat = () => {
   };
 
   const renderMessages = () =>
-    history.map(({ name, color, msg }, i) => (
+    history.map(({ name, color:[r,g,b], msg }, i) => (
       <li className="chatMsg" key={i}>
         <span
           className="chatMsgName"
-          style={{ color: `rgb(${color[0]},${color[1]},${color[2]})` }}
+          style={{ color: `rgb(${r},${g},${b})` }}
         >
           {name}
         </span>
@@ -67,7 +58,7 @@ const Chat = () => {
       <div className="chatFlexBox">
         <Scrollable
           className="chatMsgBox"
-          scrollColor="rgb(27,27,27)"
+          scrollColor="rgb(12,12,12)"
           scrollBorder="rgb(55,55,55)"
           scrollWidth="10px"
           scrollRadius="25px"

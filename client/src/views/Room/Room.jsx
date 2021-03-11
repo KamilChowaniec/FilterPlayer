@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
 import Navbar from "components/Navbar/Navbar.jsx";
 import Playlist from "components/Playlist/Playlist.jsx";
